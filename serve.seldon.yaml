@@ -1,0 +1,51 @@
+
+apiVersion: machinelearning.seldon.io/v1alpha2
+kind: SeldonDeployment
+metadata:
+  name: anomaly-detection
+  labels:
+    component: serving
+  annotations:
+    image.alpha.openshift.io/triggers: anomaly-deection-serve
+    alpha.image.policy.openshift.io/resolve-names: "*"
+spec:
+  annotations:
+    deployment_version: "1"
+  name: anomaly-detection
+  predictors:
+  - annotations:
+        predictor_version: "0.1"
+    componentSpecs:
+    - spec:
+        containers:
+          - name: anomaly-detection
+            image: anomaly-detection-serve
+            env:
+            - name: MODEL_VERSION
+              value: "1"
+            - name: MODEL_THRESHOLD
+              value: "42"
+    graph:
+      children: []
+      endpoint:
+        type: REST
+      name: anomaly-detection
+      type: MODEL
+    name: predictor
+    replicas: 1
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: anomaly-detection
+  labels:
+    component: serving
+spec:
+  port:
+    targetPort: http
+  to:
+    kind: Service
+    name: anomaly-detection-anomaly-detection
+  tls:
+    insecureEdgeTerminationPolicy: Allow
+    termination: edge

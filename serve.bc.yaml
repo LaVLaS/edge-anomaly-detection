@@ -1,0 +1,42 @@
+---
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: anomaly-detection-serve
+  annotations:
+    description: >
+      Source-to-Image (S2I) builder image for serving an anomaly detection model
+  labels:
+    component: serving
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: anomaly-detection-serve:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      uri: https://github.com/vpavlin/edge-anomaly-detection.git
+    type: Git
+  strategy:
+    sourceStrategy:
+      from:
+        kind: DockerImage
+        name: registry.access.redhat.com/ubi7/python-36
+    type: Source
+  triggers:
+    - type: ConfigChange
+status:
+  lastVersion: 0
+---
+kind: ImageStream
+apiVersion: v1
+metadata:
+  name: anomaly-detection-serve
+  labels:
+    component: serving
+spec:
+  lookupPolicy:
+    local: true
