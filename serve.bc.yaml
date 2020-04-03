@@ -12,13 +12,14 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: anomaly-detection-serve:latest
+      name: anomaly-detection-serve:moving-average
   postCommit: {}
   resources: {}
   runPolicy: Serial
   source:
     git:
       uri: https://github.com/vpavlin/edge-anomaly-detection.git
+      ref: moving-average
     type: Git
   strategy:
     sourceStrategy:
