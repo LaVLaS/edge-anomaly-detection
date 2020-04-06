@@ -12,7 +12,7 @@ Seldon Deployment
 oc apply -f serve.selcon.yaml
 ```
 
-You can change `MODEL_THRESHOLD` env var to modify the threshold for anomaly
+You can change `MODEL_STDDEV_MULTIPLIER` (defines a threshold for anomaly detection - `mean + std dev * multiplier`) and `MODEL_WINDOW_SIZE` (how many historiacl values are used to compute mean and std dev) env vars to modify the parameters for anomaly detection
 
 ## Example query
 

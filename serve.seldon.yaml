@@ -6,7 +6,7 @@ metadata:
   labels:
     component: serving
   annotations:
-    image.alpha.openshift.io/triggers: anomaly-deection-serve
+    image.alpha.openshift.io/triggers: anomaly-detection-serve
     alpha.image.policy.openshift.io/resolve-names: "*"
 spec:
   annotations:
@@ -19,12 +19,14 @@ spec:
     - spec:
         containers:
           - name: anomaly-detection
-            image: anomaly-detection-serve
+            image: anomaly-detection-serve:moving-average
             env:
             - name: MODEL_VERSION
               value: "1"
-            - name: MODEL_THRESHOLD
-              value: "42"
+            - name: MODEL_STDDEV_MULTIPLIER
+              value: "3"
+            - name: MODEL_WINDOW_SIZE
+              value: "5"
     graph:
       children: []
       endpoint:
