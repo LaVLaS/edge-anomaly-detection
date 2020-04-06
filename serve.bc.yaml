@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: BuildConfig
 metadata:
-  name: anomaly-detection-serve
+  name: edge-anomaly-detection
   annotations:
     description: >
       Source-to-Image (S2I) builder image for serving an anomaly detection model
@@ -12,14 +12,13 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: anomaly-detection-serve:moving-average
+      name: edge-anomaly-detection:0.2.0
   postCommit: {}
   resources: {}
   runPolicy: Serial
   source:
     git:
       uri: https://github.com/vpavlin/edge-anomaly-detection.git
-      ref: moving-average
     type: Git
   strategy:
     sourceStrategy:
@@ -35,7 +34,7 @@ status:
 kind: ImageStream
 apiVersion: v1
 metadata:
-  name: anomaly-detection-serve
+  name: edge-anomaly-detection
   labels:
     component: serving
 spec:

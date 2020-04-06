@@ -1,4 +1,3 @@
-
 apiVersion: machinelearning.seldon.io/v1alpha2
 kind: SeldonDeployment
 metadata:
@@ -6,7 +5,6 @@ metadata:
   labels:
     component: serving
   annotations:
-    image.alpha.openshift.io/triggers: anomaly-detection-serve
     alpha.image.policy.openshift.io/resolve-names: "*"
 spec:
   annotations:
@@ -19,7 +17,7 @@ spec:
     - spec:
         containers:
           - name: anomaly-detection
-            image: anomaly-detection-serve:moving-average
+            image: edge-anomaly-detection:0.2.0
             env:
             - name: MODEL_VERSION
               value: "1"
