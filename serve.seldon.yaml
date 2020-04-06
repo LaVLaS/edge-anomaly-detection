@@ -6,7 +6,7 @@ metadata:
   labels:
     component: serving
   annotations:
-    image.alpha.openshift.io/triggers: anomaly-deection-serve
+    image.alpha.openshift.io/triggers: anomaly-detection-serve
     alpha.image.policy.openshift.io/resolve-names: "*"
 spec:
   annotations:
